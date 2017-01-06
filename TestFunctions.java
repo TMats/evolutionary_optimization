@@ -7,6 +7,7 @@ public class TestFunctions{
         // set maxmum & minimum of x
         double max = 0.0;
         double min = 0.0;
+
         switch (func_id) {
             case 1:
                 // Sphere Function
@@ -120,6 +121,7 @@ public class TestFunctions{
     public static double get_fitness(int func_id, double[] x){
         return value_to_fitness(get_value(func_id, x));
     }
+
 
     public static double value_to_fitness(double val){
         double fit;

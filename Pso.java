@@ -24,10 +24,8 @@ class Particle{
 
     Particle(int dim){
         this.dim = dim;
-
         x = TestFunctions.init_x(func_id, dim);
         v = new double[dim];
-        // add
         r = Math.random()*0.3+0.7;
         value = TestFunctions.get_value(func_id, x);
         best_x = Arrays.copyOf(x,x.length);
@@ -81,30 +79,15 @@ public class Pso{
             Particle part = new Particle(D);
             particle_list.add(part);
             particle_list.get(i).update_best();
-//            //print debug
-//            if(i==0 || i==1){
-//                System.out.println(Arrays.toString(particle_list.get(i).get_x()));
-//                System.out.println(particle_list.get(i).get_value());
-//            }
         }
 
         for(int t=1;t<T+1;t++){
             for(int i=0;i<N;i++){
                 particle_list.get(i).update();
-//                //print debug
-//                if(i==0){
-//                    System.out.println(Arrays.toString(particle_list.get(i).get_x()));
-//                    System.out.println(particle_list.get(i).get_value());
-//                }
                 particle_list.get(i).update_best();
             }
         }
-//        System.out.println("func_id="+func_id+" num_particles:"+N+" num_dims:"+D+" num_iters:"+T);
-//        System.out.println(Arrays.toString(Particle.global_best_x));
-//        System.out.println(Particle.global_best_value);
-//        System.out.println();
         double result = Particle.global_best_value;
-//        System.out.println(Particle.global_best_value);
         return result;
     }
 
@@ -119,8 +102,8 @@ public class Pso{
         int T = 250;
         // parameters
         double[] params = {0.7,0.4,0.3};
-
+        // execute
         double result = execute(func_id,N,D,T,params);
+        System.out.println(result);
     }
-
 }

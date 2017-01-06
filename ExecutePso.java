@@ -38,9 +38,6 @@ public class ExecutePso{
             double[] params = {0.7,0.4,0.3};
 
             //change w, c1, c2
-//            double[] ws={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
-//            double[] c1s={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
-//            double[] c2s={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
             double[] ws={0.1,0.3,0.5,0.7,0.9};
             double[] c1s={0.1,0.3,0.5,0.7,0.9};
             double[] c2s={0.1,0.3,0.5,0.7,0.9};
@@ -67,7 +64,5 @@ public class ExecutePso{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
-
     }
 }

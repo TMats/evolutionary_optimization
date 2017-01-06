@@ -30,7 +30,6 @@ public class ExecuteAbc{
             }
             pw.println();
 
-
             // parameters(defaults)
             int N = 100;
             int D = 5;
@@ -62,7 +61,5 @@ public class ExecuteAbc{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
-
     }
 }

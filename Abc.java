@@ -111,11 +111,6 @@ public class Abc{
                 }
             }
         }
-//        System.out.println("func_id="+func_id+" num_employed_bees:"+N+" num_dims:"+D+" num_iters:"+T);
-//        System.out.println(Arrays.toString(Employed.global_best_x));
-//        System.out.println(TestFunctions.get_value(func_id, Employed.global_best_x));
-//        System.out.println();
-
         double result = TestFunctions.get_value(func_id, Employed.global_best_x);
         return result;
     }
@@ -131,8 +126,9 @@ public class Abc{
         int T = 200;
         // limit number of stay
         int L = 20;
-
+        // execute
         double result = execute(func_id,N,D,T,L);
+        System.out.println(result);
     }
 
 }
