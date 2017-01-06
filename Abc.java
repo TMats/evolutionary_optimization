@@ -4,21 +4,20 @@ import java.util.Random;
 
 class Employed{
     public static int num_employed;
+    public static int func_id;
 
     // define 'global_best's
     public static double[] global_best_x;
     public static double global_best_fitness;
 
     private int id;
-    private int func_id;
     private int dim;
     private double[] x;
     private double fitness;
     private int num_stay;
 
-    Employed(int id, int func_id, int dim){
+    Employed(int id, int dim){
         this.id = id;
-        this.func_id = func_id;
         this.dim = dim;
         x = TestFunctions.init_x(func_id,dim);
         fitness = TestFunctions.get_fitness(func_id,x);
@@ -68,13 +67,13 @@ public class Abc{
     public static double execute(int func_id, int N, int D, int T, int L){
         Employed.global_best_x = new double[N];
         Employed.global_best_fitness = 0;
-        double fit;
+        Employed.func_id = func_id;
 
         // init emoployed bee
         Employed.num_employed = N;
         double[] fits = new double[N];
         for(int i=0;i<N;i++){
-            Employed emp = new Employed(i, func_id, D);
+            Employed emp = new Employed(i, D);
             employed_list.add(emp);
             fits[i] = employed_list.get(i).get_fitness();
             if(employed_list.get(i).get_fitness()>Employed.global_best_fitness){
@@ -112,10 +111,10 @@ public class Abc{
                 }
             }
         }
-        System.out.println("func_id="+func_id+" num_employed_bees:"+N+" num_dims:"+D+" num_iters:"+T);
-        System.out.println(Arrays.toString(Employed.global_best_x));
-        System.out.println(TestFunctions.get_value(func_id, Employed.global_best_x));
-        System.out.println();
+//        System.out.println("func_id="+func_id+" num_employed_bees:"+N+" num_dims:"+D+" num_iters:"+T);
+//        System.out.println(Arrays.toString(Employed.global_best_x));
+//        System.out.println(TestFunctions.get_value(func_id, Employed.global_best_x));
+//        System.out.println();
 
         double result = TestFunctions.get_value(func_id, Employed.global_best_x);
         return result;
@@ -123,7 +122,7 @@ public class Abc{
 
     public static void main(String[] args) {
         // function_id
-        int func_id = 4;
+        int func_id = 1;
         // number of employed bee
         int N = 100;
         // dimension

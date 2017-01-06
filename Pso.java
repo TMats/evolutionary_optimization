@@ -104,7 +104,7 @@ public class Pso{
 //        System.out.println(Particle.global_best_value);
 //        System.out.println();
         double result = Particle.global_best_value;
-        System.out.println(Particle.global_best_value);
+//        System.out.println(Particle.global_best_value);
         return result;
     }
 
