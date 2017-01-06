@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 class Particle{
     // Consts
-    public static double W = 0.3; // -0.2
-    public static double C1 = 0.6; //1.2
-    public static double C2 = 0.6; //1.2
+    public static double W = 0.7; // -0.2 0.725
+    public static double C1 = 0.4; //1.2 0.4
+    public static double C2 = 0.3; //1.2 0.2 0.3
 
     // define 'global_best's
     public static double[] global_best_x;
@@ -14,10 +14,10 @@ class Particle{
 
     private int func_id;
     private int dim;
-    private double min;
-    private double max;
     private double[] x;
     private double[] v;
+    // add
+    private double r;
     private double value;
     private double[] best_x;
     private double best_value;
@@ -25,10 +25,11 @@ class Particle{
     Particle(int func_id, int dim){
         this.func_id = func_id;
         this.dim = dim;
-        min = TestFunctions.get_limit_x(func_id)[0];
-        max = TestFunctions.get_limit_x(func_id)[1];
+
         x = TestFunctions.init_x(func_id, dim);
         v = new double[dim];
+        // add
+        r = Math.random()*0.3+0.7;
         value = TestFunctions.get_value(func_id, x);
         best_x = Arrays.copyOf(x,x.length);
         best_value = value;
@@ -43,10 +44,8 @@ class Particle{
         double r1 = Math.random();
         double r2 = Math.random();
         for (int i = 0; i < dim; i++) {
-            //if(new_x[i]+v[i]>=min && new_x[i]+v[i]<=max){
-                new_x[i] += v[i];
-            //}
-            new_v[i] = W * v[i] + C1 * r1 * (best_x[i] - x[i]) + C2 * r2 * (global_best_x[i] - x[i]);
+            new_x[i] += v[i];
+            new_v[i] = r*(W * v[i] + C1 * r1 * (best_x[i] - x[i]) + C2 * r2 * (global_best_x[i] - x[i]));
         }
         x = new_x;
         v = new_v;
@@ -79,7 +78,7 @@ public class Pso{
             particle_list.add(part);
             particle_list.get(i).update_best();
             //print debug
-            if(i==0){
+            if(i==0 || i==1){
                 System.out.println(Arrays.toString(particle_list.get(i).get_x()));
                 System.out.println(particle_list.get(i).get_value());
             }
@@ -111,11 +110,11 @@ public class Pso{
         // function_id
         int func_id = 6;
         // number of particles
-        int N = 1000;
+        int N = 4000;
         // dimension
         int D = 5;
         // number of iteration
-        int T = 1000;
+        int T = 250;
 
         double[] result = execute(func_id,N,D,T);
     }

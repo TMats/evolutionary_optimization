@@ -65,14 +65,14 @@ class Employed{
 public class Abc{
     public static ArrayList<Employed> employed_list = new ArrayList<Employed>();
 
-    public static double[] execute(int func_id, int N, int D, int T){
+    public static double[] execute(int func_id, int N, int D, int T, int L){
         Employed.global_best_x = new double[N];
         Employed.global_best_fitness = 0;
         double[] result = new double[T+1];
         double fit;
 
         // limit number of 'stay's
-        int stay_limit = 10;
+        L = 20;
 
         // init emoployed bee
         Employed.num_employed = N;
@@ -103,7 +103,7 @@ public class Abc{
 
             // scout
             for(int i=0; i<N; i++){
-                if(employed_list.get(i).get_num_stay()>stay_limit) {
+                if(employed_list.get(i).get_num_stay()>L) {
                     employed_list.get(i).scout();
                     fits[i] = employed_list.get(i).get_fitness();
                 }
@@ -128,14 +128,16 @@ public class Abc{
     public static void main(String[] args) {
         // function_id
         int func_id = 6;
-        // number of particles
-        int N = 1000;
+        // number of employed bee
+        int N = 100;
         // dimension
         int D = 5;
         // number of iteration
-        int T = 1000;
+        int T = 200;
+        // limit number of stay
+        int L = 20;
 
-        double[] result = execute(func_id,N,D,T);
+        double[] result = execute(func_id,N,D,T,L);
     }
 
 }

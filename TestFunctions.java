@@ -118,8 +118,11 @@ public class TestFunctions{
 
     // calucate fitness
     public static double get_fitness(int func_id, double[] x){
+        return value_to_fitness(get_value(func_id, x));
+    }
+
+    public static double value_to_fitness(double val){
         double fit;
-        double val = get_value(func_id, x);
         if(val>=0){
             fit = 1.0/(1.0+val);
         }else{
