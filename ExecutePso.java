@@ -1,11 +1,68 @@
-public class ExexutePso{
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
+import java.util.*;
 
-    // change function
+public class ExecutePso{
+    public static double[] evaluate(int f, int N, int D, int T, double[] params, int trial_num){
+        double[] eval_result = new double[trial_num];
+        for(int t=0;t<trial_num;t++) {
+            eval_result[t]=Pso.execute(f,N,D,T,params);
+        }
 
-    // change params
+        return eval_result;
+    }
 
 
-    public static void main(){
+    public static void main(String[] args){
+        try {
+            // number of functions
+            int func_num = 6;
+            // number of trials
+            int trial_num = 20;
+
+            FileWriter fw = new FileWriter("PSO_result.csv", true);
+            PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+            pw.print("func,D,N,T,W,C1,C2,");
+            for(int t=0;t<trial_num;t++){
+                pw.print((t+1)+",");
+            }
+            pw.println();
+
+
+            // parameters(defaults)
+            int N = 4000;
+            int D = 5;
+            int T = 250;
+            double[] params = {0.7,0.4,0.3};
+
+            //change w, c1, c2
+            double[] ws={0.7};
+            double[] c1s={0.4};
+            double[] c2s={0.3};
+            for(int f=0;f<func_num;f++){
+            for(int i=0;i<ws.length;i++){
+                for(int j=0;j<c1s.length;j++){
+                    for(int k=0;k<c2s.length;k++){
+                        double p[] = {ws[i],c1s[j],c2s[k]};
+                        double[] results = evaluate(f,N,D,T,p,trial_num);
+                        pw.print(f+","+D+","+N+","+T+","+ws[i]+","+c1s[j]+","+c2s[k]+",");
+                        for(int t=0;t<trial_num;t++){
+                            pw.print(results[t]+",");
+                        }
+                    }
+                        pw.println();
+                    }
+                }
+            }
+
+            pw.close();
+            System.out.println("finished");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
 
     }
 }

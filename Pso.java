@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 class Particle{
     // Consts
-    public static double W = 0.7; // -0.2 0.725
-    public static double C1 = 0.4; //1.2 0.4
-    public static double C2 = 0.3; //1.2 0.2 0.3
+    public static double W;
+    public static double C1;
+    public static double C2;
 
     // define 'global_best's
     public static double[] global_best_x;
     public static double global_best_value;
+    public static int func_id;
 
-    private int func_id;
     private int dim;
     private double[] x;
     private double[] v;
@@ -22,8 +22,7 @@ class Particle{
     private double[] best_x;
     private double best_value;
 
-    Particle(int func_id, int dim){
-        this.func_id = func_id;
+    Particle(int dim){
         this.dim = dim;
 
         x = TestFunctions.init_x(func_id, dim);
@@ -68,55 +67,60 @@ class Particle{
 
 
 public class Pso{
-    public static double[] execute(int func_id, int N, int D, int T){
+    public static double execute(int func_id, int N, int D, int T, double[] params){
+        Particle.func_id = func_id;
+        Particle.W =params[0];
+        Particle.C1=params[1];
+        Particle.C2=params[2];
+
         Particle.global_best_x = new double[N];
         Particle.global_best_value = Double.POSITIVE_INFINITY;
 
         ArrayList<Particle> particle_list = new ArrayList<Particle>();
         for(int i=0;i<N;i++){
-            Particle part = new Particle(func_id,D);
+            Particle part = new Particle(D);
             particle_list.add(part);
             particle_list.get(i).update_best();
-            //print debug
-            if(i==0 || i==1){
-                System.out.println(Arrays.toString(particle_list.get(i).get_x()));
-                System.out.println(particle_list.get(i).get_value());
-            }
+//            //print debug
+//            if(i==0 || i==1){
+//                System.out.println(Arrays.toString(particle_list.get(i).get_x()));
+//                System.out.println(particle_list.get(i).get_value());
+//            }
         }
-
-        double[] result = new double[T+1];
-        result[0] = Particle.global_best_value;
 
         for(int t=1;t<T+1;t++){
             for(int i=0;i<N;i++){
                 particle_list.get(i).update();
-                //print debug
-                if(i==0){
-                    System.out.println(Arrays.toString(particle_list.get(i).get_x()));
-                    System.out.println(particle_list.get(i).get_value());
-                }
+//                //print debug
+//                if(i==0){
+//                    System.out.println(Arrays.toString(particle_list.get(i).get_x()));
+//                    System.out.println(particle_list.get(i).get_value());
+//                }
                 particle_list.get(i).update_best();
             }
-            result[t] = Particle.global_best_value;
         }
-        System.out.println("func_id="+func_id+" num_particles:"+N+" num_dims:"+D+" num_iters:"+T);
-        System.out.println(Arrays.toString(Particle.global_best_x));
+//        System.out.println("func_id="+func_id+" num_particles:"+N+" num_dims:"+D+" num_iters:"+T);
+//        System.out.println(Arrays.toString(Particle.global_best_x));
+//        System.out.println(Particle.global_best_value);
+//        System.out.println();
+        double result = Particle.global_best_value;
         System.out.println(Particle.global_best_value);
-        System.out.println();
         return result;
     }
 
     public static void main(String[] args) {
         // function_id
-        int func_id = 6;
+        int func_id = 1;
         // number of particles
         int N = 4000;
         // dimension
         int D = 5;
         // number of iteration
         int T = 250;
+        // parameters
+        double[] params = {0.7,0.4,0.3};
 
-        double[] result = execute(func_id,N,D,T);
+        double result = execute(func_id,N,D,T,params);
     }
 
 }
