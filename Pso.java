@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 class Particle{
     // Consts
-    public static double W = -0.2;
-    public static double C1 = 1.2;
-    public static double C2 = 1.2;
+    public static double W = 0.3; // -0.2
+    public static double C1 = 0.6; //1.2
+    public static double C2 = 0.6; //1.2
 
     // define 'global_best's
     public static double[] global_best_x;
