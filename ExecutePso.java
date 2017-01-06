@@ -20,7 +20,7 @@ public class ExecutePso{
             // number of functions
             int func_num = 6;
             // number of trials
-            int trial_num = 20;
+            int trial_num = 10;
 
             FileWriter fw = new FileWriter("PSO_result.csv", true);
             PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
@@ -38,22 +38,22 @@ public class ExecutePso{
             double[] params = {0.7,0.4,0.3};
 
             //change w, c1, c2
-            double[] ws={0.7};
-            double[] c1s={0.4};
-            double[] c2s={0.3};
+            double[] ws={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
+            double[] c1s={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
+            double[] c2s={0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0};
             for(int f=0;f<func_num;f++){
-            for(int i=0;i<ws.length;i++){
-                for(int j=0;j<c1s.length;j++){
-                    for(int k=0;k<c2s.length;k++){
-                        double p[] = {ws[i],c1s[j],c2s[k]};
-                        double[] results = evaluate(f,N,D,T,p,trial_num);
-                        pw.print(f+","+D+","+N+","+T+","+ws[i]+","+c1s[j]+","+c2s[k]+",");
-                        for(int t=0;t<trial_num;t++){
-                            pw.print(results[t]+",");
+                for(int i=0;i<ws.length;i++){
+                    for(int j=0;j<c1s.length;j++){
+                        for(int k=0;k<c2s.length;k++){
+                            double p[] = {ws[i],c1s[j],c2s[k]};
+                            double[] results = evaluate(f,N,D,T,p,trial_num);
+                            pw.print((f+1)+","+D+","+N+","+T+","+ws[i]+","+c1s[j]+","+c2s[k]+",");
+                            for(int t=0;t<trial_num;t++){
+                                pw.print(results[t]+",");
+                            }
                         }
-                    }
-                        pw.println();
-                    }
+                            pw.println();
+                        }
                 }
             }
 

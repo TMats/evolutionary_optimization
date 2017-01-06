@@ -65,14 +65,10 @@ class Employed{
 public class Abc{
     public static ArrayList<Employed> employed_list = new ArrayList<Employed>();
 
-    public static double[] execute(int func_id, int N, int D, int T, int L){
+    public static double execute(int func_id, int N, int D, int T, int L){
         Employed.global_best_x = new double[N];
         Employed.global_best_fitness = 0;
-        double[] result = new double[T+1];
         double fit;
-
-        // limit number of 'stay's
-        L = 20;
 
         // init emoployed bee
         Employed.num_employed = N;
@@ -86,7 +82,6 @@ public class Abc{
                 Employed.global_best_x = Arrays.copyOf(employed_list.get(i).get_x(),employed_list.get(i).get_x().length);
             }
         }
-        result[0]=TestFunctions.get_value(func_id,Employed.global_best_x);
 
         for(int t=1;t<T+1;t++) {
             for(int i = 0; i<N; i++) {
@@ -116,18 +111,19 @@ public class Abc{
                     Employed.global_best_x = Arrays.copyOf(employed_list.get(i).get_x(),employed_list.get(i).get_x().length);
                 }
             }
-            result[t] = TestFunctions.get_value(func_id, Employed.global_best_x);
         }
         System.out.println("func_id="+func_id+" num_employed_bees:"+N+" num_dims:"+D+" num_iters:"+T);
         System.out.println(Arrays.toString(Employed.global_best_x));
         System.out.println(TestFunctions.get_value(func_id, Employed.global_best_x));
         System.out.println();
+
+        double result = TestFunctions.get_value(func_id, Employed.global_best_x);
         return result;
     }
 
     public static void main(String[] args) {
         // function_id
-        int func_id = 6;
+        int func_id = 4;
         // number of employed bee
         int N = 100;
         // dimension
@@ -137,7 +133,7 @@ public class Abc{
         // limit number of stay
         int L = 20;
 
-        double[] result = execute(func_id,N,D,T,L);
+        double result = execute(func_id,N,D,T,L);
     }
 
 }
