@@ -50,9 +50,9 @@ public class ExecuteAbc{
                             for (int t = 0; t < trial_num; t++) {
                                 pw.print(results[t] + ",");
                             }
+                            pw.println();
                         }
                     }
-                    pw.println();
                 }
             }
 
