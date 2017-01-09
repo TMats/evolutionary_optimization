@@ -1,6 +1,10 @@
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
 
 class Employed{
     public static int num_employed;
@@ -82,35 +86,51 @@ public class Abc{
             }
         }
 
-        for(int t=1;t<T+1;t++) {
-            for(int i = 0; i<N; i++) {
-                employed_list.get(i).update();
-                fits[i] = employed_list.get(i).get_fitness();
-            }
-
-            // onlooker
-            for(int i=0; i<N; i++){
-                int idx = ArrayTools.get_roulette_index(fits);
-                employed_list.get(idx).update();
-                fits[idx] = employed_list.get(idx).get_fitness();
-            }
-
-            // scout
-            for(int i=0; i<N; i++){
-                if(employed_list.get(i).get_num_stay()>L) {
-                    employed_list.get(i).scout();
+        // print ---
+//        try {
+//            FileWriter fw = new FileWriter("abclog_1.csv", true);
+//            PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+//            pw.print("iter_num,value,");
+//            pw.println();
+            // --- print
+            for (int t = 1; t < T + 1; t++) {
+                // print ---
+//                pw.print((t-1)+",");
+//                pw.print(TestFunctions.get_value(func_id, Employed.global_best_x)+",");
+//                pw.println();
+                // ---print
+                for (int i = 0; i < N; i++) {
+                    employed_list.get(i).update();
                     fits[i] = employed_list.get(i).get_fitness();
                 }
-            }
-
-            // renew 'best's
-            for(int i=0;i<N;i++){
-                if(employed_list.get(i).get_fitness()>Employed.global_best_fitness){
-                    Employed.global_best_fitness = employed_list.get(i).get_fitness();
-                    Employed.global_best_x = Arrays.copyOf(employed_list.get(i).get_x(),employed_list.get(i).get_x().length);
+                // onlooker
+                for (int i = 0; i < N; i++) {
+                    int idx = ArrayTools.get_roulette_index(fits);
+                    employed_list.get(idx).update();
+                    fits[idx] = employed_list.get(idx).get_fitness();
+                }
+                // scout
+                for (int i = 0; i < N; i++) {
+                    if (employed_list.get(i).get_num_stay() > L) {
+                        employed_list.get(i).scout();
+                        fits[i] = employed_list.get(i).get_fitness();
+                    }
+                }
+                // renew 'best's
+                for (int i = 0; i < N; i++) {
+                    if (employed_list.get(i).get_fitness() > Employed.global_best_fitness) {
+                        Employed.global_best_fitness = employed_list.get(i).get_fitness();
+                        Employed.global_best_x = Arrays.copyOf(employed_list.get(i).get_x(), employed_list.get(i).get_x().length);
+                    }
                 }
             }
-        }
+        // print ---
+//            pw.close();
+//        }catch (IOException ex){
+//            ex.printStackTrace();
+//        }
+        // ---print
+
         double result = TestFunctions.get_value(func_id, Employed.global_best_x);
         return result;
     }

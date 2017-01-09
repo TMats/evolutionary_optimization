@@ -1,5 +1,9 @@
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
 
 
 class Particle{
@@ -81,12 +85,30 @@ public class Pso{
             particle_list.get(i).update_best();
         }
 
-        for(int t=1;t<T+1;t++){
-            for(int i=0;i<N;i++){
-                particle_list.get(i).update();
-                particle_list.get(i).update_best();
+        // print ---
+//        try{
+//            FileWriter fw = new FileWriter("psolog_1.csv", true);
+//            PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+//            pw.print("iter_num,value,");
+//            pw.println();
+        // --- print
+            for(int t=1;t<T+1;t++){
+                // print ---
+//                pw.print((t-1)+",");
+//                pw.print(Particle.global_best_value+",");
+//                pw.println();
+                // ---print
+                for(int i=0;i<N;i++){
+                    particle_list.get(i).update();
+                    particle_list.get(i).update_best();
+                }
             }
-        }
+        // print ---
+//            pw.close();
+//        }catch(IOException ex){
+//            ex.printStackTrace();
+//        }
+        // ---print
         double result = Particle.global_best_value;
         return result;
     }
